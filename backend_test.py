@@ -2,11 +2,13 @@ import datetime
 import json
 import os
 
+# Set the files we need.
 INVENTORY_FILE = 'inventory.json'
 DONATIONS_FILE = 'donations.json'
 DISTRIBUTIONS_FILE = 'distributions.json'
 
 def load_data(file_path):
+    '''Load the file needed to get or store data'''
     if not os.path.exists(file_path):
         return []
     try:
@@ -16,10 +18,12 @@ def load_data(file_path):
         return []
 
 def save_data(file_path, data):
+    '''Save the data to the given file'''
     with open(file_path, 'w') as f:
         json.dump(data, f, indent=4)
 
 def add_food_donation(inventory, donations_log, donor_name, item_name, quantity, expiration_date):
+    '''Add food donation information'''
     print(f"Processing food donation from {donor_name}...")
 
     item_found = False
@@ -50,6 +54,7 @@ def add_food_donation(inventory, donations_log, donor_name, item_name, quantity,
     print("Success. Inventory updated and donation logged.")
 
 def add_money_donation(donations_log, donor_name, amount):
+    '''Add money donation information'''
     print(f"Processing money donation from {donor_name}...")
     donation_record = {
         'donor': donor_name,
@@ -62,6 +67,7 @@ def add_money_donation(donations_log, donor_name, amount):
     print("Success. Money donation logged.")
 
 def record_distribution(inventory, distributions_log, household_name, item_name, quantity_taken):
+    '''Add distribution record to the file.'''
     print(f"Processing distribution to {household_name}...")
 
     item_found_in_inventory = False
@@ -90,6 +96,7 @@ def record_distribution(inventory, distributions_log, household_name, item_name,
         print(f"Error: Item '{item_name}' not found in inventory.")
 
 def view_inventory(inventory):
+    '''Pulls the inventory info from the file'''
     print("\nCurrent Pantry Inventory:")
     if not inventory:
         print("Inventory is empty.")
@@ -99,6 +106,7 @@ def view_inventory(inventory):
                 print(f"- {item['name']}, Quantity: {item['quantity']}, Expires: {item['expiration_date']}")
 
 def view_donations(donations_log):
+    '''View all donations logged'''
     print("\nDonation Log:")
     if not donations_log:
         print("No donations logged.")
@@ -107,6 +115,7 @@ def view_donations(donations_log):
             print(f"- Date: {log['date']}, Donor: {log['donor']}, Type: {log['type']}, Details: {log['item_details']}")
 
 def view_distributions(distributions_log):
+    '''View all food distribution logged'''
     print("\nFood Distribution Log:")
     if not distributions_log:
         print("No distributions logged.")
@@ -115,13 +124,15 @@ def view_distributions(distributions_log):
             print(f"- Date: {log['date']}, Household: {log['household']}, Items: {log['item_details']}")
 
 def main():
+
+    # Load the data
     inventory = load_data(INVENTORY_FILE)
     donations_log = load_data(DONATIONS_FILE)
     distributions_log = load_data(DISTRIBUTIONS_FILE)
 
     print("Pantry Backend Test Console")
 
-    while True:
+    while True: ## This is a console view, may be removed later.
         print("\nMenu:")
         print("1. View Inventory")
         print("2. Log a Food Donation")
