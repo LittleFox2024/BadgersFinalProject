@@ -1,47 +1,56 @@
 import tkinter as tk
+import backend
 
 food_donations = []
 money_donations = []
 food_distribution = []
+
+inventory=backend.load_data(backend.INVENTORY_FILE)
+donations_log = backend.load_data(backend.DONATIONS_FILE)
+distributions_log = backend.load_data(backend.DISTRIBUTIONS_FILE)
 
 # MOCK FUNCTIONS
 def add_food():
     item = food_entry.get()
     quantity = food_quantity_entry.get()
     donor = food_donor_entry.get()
-    if item and quantity and donor:
-      # Adds to food_donations list
-        food_donations.append((donor, item, quantity))
-      # Deletes previous entries from entry box
-        food_entry.delete(0, tk.END)
-        food_quantity_entry.delete(0, tk.END)
-        food_donor_entry.delete(0, tk.END)
+    backend.add_food_donation(inventory=inventory, donations_log=donations_log, donor_name="TEST", item_name=item, quantity=quantity, expiration_date=("2000-01-01"))
+    # if item and quantity and donor:
+    #   # Adds to food_donations list
+    #     food_donations.append((donor, item, quantity))
+    #   # Deletes previous entries from entry box
+    #     food_entry.delete(0, tk.END)
+    #     food_quantity_entry.delete(0, tk.END)
+    #     food_donor_entry.delete(0, tk.END)
 
 def add_money():
-    amount = money_entry.get()
+    amount = float(money_entry.get())
     donor = money_donor_entry.get()
-    if amount and donor:
-        money_donations.append((amount, donor))
-        money_entry.delete(0, tk.END)
-        money_donor_entry.delete(0,tk.END)
+    backend.add_money_donation(donations_log=donations_log, donor_name=donor, amount=amount)
+    # if amount and donor:
+    #     money_donations.append((amount, donor))
+    #     money_entry.delete(0, tk.END)
+    #     money_donor_entry.delete(0,tk.END)
 
 def record_distribution():
     household = household_entry.get()
     item = distribute_item_entry.get()
-    quantity = distribute_quantity_entry.get()
-    if household and item and quantity:
-        food_distribution.append((household, item, quantity))
-        household_entry.delete(0, tk.END)
-        distribute_item_entry.delete(0, tk.END)
-        distribute_quantity_entry.delete(0, tk.END)
+    quantity = int(distribute_quantity_entry.get())
+    backend.record_distribution(inventory=inventory, distributions_log=distributions_log, household_name=household, item_name=item, quantity_taken=quantity)
+    # if household and item and quantity:
+    #     food_distribution.append((household, item, quantity))
+    #     household_entry.delete(0, tk.END)
+    #     distribute_item_entry.delete(0, tk.END)
+    #     distribute_quantity_entry.delete(0, tk.END)
 
 def view_distributions_inventory():
   # Creates a new popup window
     log_window = tk.Toplevel(root)
     log_window.title("Donation Logs")
     log_window.geometry("200x400")
+    #backend.load_data(inventory)
     tk.Label(log_window, text="Food Donations", font=("Arial", 10, "bold")).pack(pady=5)
-  # Adds label with data from the food, money, and distributions lists
+    #Adds label with data from the food, money, and distributions lists
     for donor, item, qty in food_donations:
         tk.Label(log_window, text=f"{donor}: {qty} of {item}").pack(anchor="w")
     tk.Label(log_window, text="Money Donations", font=("Arial", 10, "bold")).pack(pady=5)
@@ -50,6 +59,8 @@ def view_distributions_inventory():
     tk.Label(log_window, text="Distributions", font=("Arial", 10, "bold")).pack(pady=5)
     for household, item, qty in food_distribution:
         tk.Label(log_window, text=f"{household}: {qty} of {item}").pack(anchor="w")
+    #for item in backend.output:
+    #    tk.Lavel(log_window, text=backend.output[item], font=("Arial", 10, "bold")).pack(pady=5)
 
 
 
@@ -139,6 +150,9 @@ tk.Button(root, text="Record Distribution", command=record_distribution).grid(ro
 # Button to view distributions, command = view_distributions_inventory
 tk.Button(root, text="View Inventory & Distributions", command=view_distributions_inventory).grid(row=14, column=0,
                                                               columnspan=2, pady=10)
+
+#tk.Button(root, text="View Inventory & Distributions", command=backend.view_inventory(backend.INVENTORY_FILE)).grid(row=14, column=0,
+#                                                              columnspan=2, pady=10)
 
 root.mainloop()
 
