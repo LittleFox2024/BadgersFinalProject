@@ -98,30 +98,36 @@ def record_distribution(inventory, distributions_log, household_name, item_name,
 def view_inventory(inventory):
     '''Pulls the inventory info from the file'''
     print("\nCurrent Pantry Inventory:")
+    output = []
     if not inventory:
         print("Inventory is empty.")
     else:
         for item in inventory:
             if item['quantity'] > 0:
-                return(f"- {item['name']}, Quantity: {item['quantity']}, Expires: {item['expiration_date']}")
+                output.append(f"- {item['name']}, Quantity: {item['quantity']}, Expires: {item['expiration_date']}")
+    return output
 
 def view_donations(donations_log):
     '''View all donations logged'''
     print("\nDonation Log:")
+    output = []
     if not donations_log:
         print("No donations logged.")
     else:
         for log in donations_log:
-            return(f"- Date: {log['date']}, Donor: {log['donor']}, Type: {log['type']}, Details: {log['item_details']}")
+            output.append(f"- Date: {log['date']}, Donor: {log['donor']}, Type: {log['type']}, Details: {log['item_details']}")
+    return output
 
 def view_distributions(distributions_log):
     '''View all food distribution logged'''
     print("\nFood Distribution Log:")
+    output = []
     if not distributions_log:
         print("No distributions logged.")
     else:
         for log in distributions_log:
-            return(f"- Date: {log['date']}, Household: {log['household']}, Items: {log['item_details']}")
+            output.append(f"- Date: {log['date']}, Household: {log['household']}, Items: {log['item_details']}")
+    return output
 
 def main():
 
@@ -148,8 +154,9 @@ def main():
         choice = input("Enter an option: ")
 
         if choice == '1':
-            ouput = view_inventory(inventory)
-            print(ouput)
+            output = view_inventory(inventory)
+            for i in output:
+                print(i)
         elif choice == '2':
             print("\nLog a Food Donation")
             donor = input("Enter donor's name: ")
@@ -182,10 +189,12 @@ def main():
             record_distribution(inventory, distributions_log, household, item, qty)
         elif choice == '5':
             output = view_donations(donations_log)
-            print(output)
+            for i in output:
+                print(i)
         elif choice == '6':
             output = view_distributions(distributions_log)
-            print(output)
+            for i in output:
+                print(i)
         elif choice == '0':
             print("Exiting.")
             break
