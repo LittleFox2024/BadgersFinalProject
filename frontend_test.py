@@ -12,7 +12,10 @@ distributions_log = backend.load_data(backend.DISTRIBUTIONS_FILE)
 # Button Functions
 def add_food():
     item = food_entry.get()
-    quantity = food_quantity_entry.get()
+    try:
+        quantity = int(food_quantity_entry.get())
+    except:
+        print("Could not change to an int")
     donor = food_donor_entry.get()
     if item and quantity and donor:
         backend.add_food_donation(inventory=inventory, donations_log=donations_log, donor_name="TEST", item_name=item, quantity=quantity, expiration_date=("2000-01-01"))
