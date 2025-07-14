@@ -103,7 +103,7 @@ def view_inventory(inventory):
     else:
         for item in inventory:
             if item['quantity'] > 0:
-                print(f"- {item['name']}, Quantity: {item['quantity']}, Expires: {item['expiration_date']}")
+                return(f"- {item['name']}, Quantity: {item['quantity']}, Expires: {item['expiration_date']}")
 
 def view_donations(donations_log):
     '''View all donations logged'''
@@ -112,7 +112,7 @@ def view_donations(donations_log):
         print("No donations logged.")
     else:
         for log in donations_log:
-            print(f"- Date: {log['date']}, Donor: {log['donor']}, Type: {log['type']}, Details: {log['item_details']}")
+            return(f"- Date: {log['date']}, Donor: {log['donor']}, Type: {log['type']}, Details: {log['item_details']}")
 
 def view_distributions(distributions_log):
     '''View all food distribution logged'''
@@ -121,7 +121,7 @@ def view_distributions(distributions_log):
         print("No distributions logged.")
     else:
         for log in distributions_log:
-            print(f"- Date: {log['date']}, Household: {log['household']}, Items: {log['item_details']}")
+            return(f"- Date: {log['date']}, Household: {log['household']}, Items: {log['item_details']}")
 
 def main():
 
@@ -130,22 +130,26 @@ def main():
     donations_log = load_data(DONATIONS_FILE)
     distributions_log = load_data(DISTRIBUTIONS_FILE)
 
-    print("Pantry Backend Test Console")
+    print("\nWelcome to the Pantry Command Line!")
+    print("----------------------------")
 
     while True: ## This is a console view, may be removed later.
-        print("\nMenu:")
+        print("Menu:")
         print("1. View Inventory")
         print("2. Log a Food Donation")
         print("3. Log a Money Donation")
         print("4. Record Food Distribution")
         print("5. View Donation Log")
         print("6. View Distribution Log")
-        print("7. Exit")
+        print("----------------------------")
+        print("0. Exit")
+        print("----------------------------\n")
 
         choice = input("Enter an option: ")
 
         if choice == '1':
-            view_inventory(inventory)
+            ouput = view_inventory(inventory)
+            print(ouput)
         elif choice == '2':
             print("\nLog a Food Donation")
             donor = input("Enter donor's name: ")
@@ -177,14 +181,16 @@ def main():
                 continue
             record_distribution(inventory, distributions_log, household, item, qty)
         elif choice == '5':
-            view_donations(donations_log)
+            output = view_donations(donations_log)
+            print(output)
         elif choice == '6':
-            view_distributions(distributions_log)
-        elif choice == '7':
+            output = view_distributions(distributions_log)
+            print(output)
+        elif choice == '0':
             print("Exiting.")
             break
         else:
-            print("Invalid choice. Please enter a number between 1 and 7.")
+            print("Invalid choice. Please enter a number between 0 and 6.")
 
 if __name__ == '__main__':
     main()
