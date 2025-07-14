@@ -7,8 +7,6 @@ INVENTORY_FILE = 'inventory.json'
 DONATIONS_FILE = 'donations.json'
 DISTRIBUTIONS_FILE = 'distributions.json'
 
-output = []
-
 def load_data(file_path):
     '''Load the file needed to get or store data'''
     if not os.path.exists(file_path):
@@ -105,8 +103,7 @@ def view_inventory(inventory):
     else:
         for item in inventory:
             if item['quantity'] > 0:
-                string = (f"- {item['name']}, Quantity: {item['quantity']}, Expires: {item['expiration_date']}")
-                output.append(string)
+                print(f"- {item['name']}, Quantity: {item['quantity']}, Expires: {item['expiration_date']}")
 
 def view_donations(donations_log):
     '''View all donations logged'''
