@@ -1,6 +1,14 @@
 import tkinter as tk
 import backend
 
+'''
+As a note: I'm trying to make this as modular as possible. Theoretically, the
+user could call the backend directly from the command line, or from the GUI and
+it should work equally well. In fact, the idea I have is that someone could
+make a new GUI that hooks into the backend without having to change a line of
+the backend's code.
+'''
+
 food_donations = []
 money_donations = []
 food_distribution = []
@@ -18,7 +26,10 @@ def add_food():
         print("Could not change to an int")
     donor = food_donor_entry.get()
     if item and quantity and donor:
-        backend.add_food_donation(inventory=inventory, donations_log=donations_log, donor_name="TEST", item_name=item, quantity=quantity, expiration_date=("2000-01-01"))
+        backend.add_food_donation(inventory=inventory, \
+                donations_log=donations_log, donor_name="TEST", \
+                item_name=item, quantity=quantity, \
+                expiration_date=("2000-01-01"))
     
 def add_money():
     try:
@@ -27,7 +38,8 @@ def add_money():
         print("Could not change amount to a float.")
     donor = money_donor_entry.get()
     if amount and donor:
-        backend.add_money_donation(donations_log=donations_log, donor_name=donor, amount=amount)
+        backend.add_money_donation(donations_log=donations_log, \
+                                   donor_name=donor, amount=amount)
 
 def record_distribution():
     household = household_entry.get()
@@ -37,27 +49,33 @@ def record_distribution():
     except:
         print("Could not change to an int.")
     if household and item and quantity:
-        backend.record_distribution(inventory=inventory, distributions_log=distributions_log, household_name=household, item_name=item, quantity_taken=quantity)
+        backend.record_distribution(inventory=inventory, \
+                distributions_log=distributions_log, household_name=household,\
+                item_name=item, quantity_taken=quantity)
 
 def view_distributions_inventory():
   # Creates a new popup window
     log_window = tk.Toplevel(root)
     log_window.title("Donation Logs")
-    log_window.geometry("200x400")
-    #backend.load_data(inventory)
-    tk.Label(log_window, text="Food Donations", font=("Arial", 10, "bold")).pack(pady=5)
-    #Adds label with data from the food, money, and distributions lists
-    for donor, item, qty in food_donations:
-        tk.Label(log_window, text=f"{donor}: {qty} of {item}").pack(anchor="w")
-    tk.Label(log_window, text="Money Donations", font=("Arial", 10, "bold")).pack(pady=5)
-    for donor, amount in money_donations:
-        tk.Label(log_window, text=f"{donor}: ${amount}").pack(anchor="w")
-    tk.Label(log_window, text="Distributions", font=("Arial", 10, "bold")).pack(pady=5)
-    for household, item, qty in food_distribution:
-        tk.Label(log_window, text=f"{household}: {qty} of {item}").pack(anchor="w")
-    #for item in backend.output:
-    #    tk.Lavel(log_window, text=backend.output[item], font=("Arial", 10, "bold")).pack(pady=5)
+    log_window.geometry("600x400")
 
+    # Show the inventory
+    tk.Label(log_window, text="Inventory", font=("Arial", 10, "bold")).pack(pady=5)
+    output = backend.view_inventory(inventory=inventory)
+    for i in output:
+        tk.Label(log_window, text=i).pack(anchor="w")
+    
+    # Show donation list
+    tk.Label(log_window, text="Donations", font=("Arial", 10, "bold")).pack(pady=5)
+    output = backend.view_donations(donations_log=donations_log)
+    for i in output:
+        tk.Label(log_window, text=i).pack(anchor="w")
+    
+    # Show distribution list
+    tk.Label(log_window, text="Distributions", font=("Arial", 10, "bold")).pack(pady=5)
+    output = backend.view_distributions(distributions_log=distributions_log)
+    for i in output:
+        tk.Label(log_window, text=output).pack(anchor="w")
 
 
 # GUI
@@ -146,8 +164,5 @@ tk.Button(root, text="Record Distribution", command=record_distribution).grid(ro
 # Button to view distributions, command = view_distributions_inventory
 tk.Button(root, text="View Inventory & Distributions", command=view_distributions_inventory).grid(row=14, column=0,
                                                               columnspan=2, pady=10)
-
-#tk.Button(root, text="View Inventory & Distributions", command=backend.view_inventory(backend.INVENTORY_FILE)).grid(row=14, column=0,
-#                                                              columnspan=2, pady=10)
 
 root.mainloop()

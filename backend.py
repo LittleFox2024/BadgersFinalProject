@@ -97,10 +97,10 @@ def record_distribution(inventory, distributions_log, household_name, item_name,
 
 def view_inventory(inventory):
     '''Pulls the inventory info from the file'''
-    print("\nCurrent Pantry Inventory:")
+    print("[Backend] Getting inventory.")
     output = []
     if not inventory:
-        print("Inventory is empty.")
+        output.append("Inventory is empty.")
     else:
         for item in inventory:
             if item['quantity'] > 0:
@@ -109,10 +109,10 @@ def view_inventory(inventory):
 
 def view_donations(donations_log):
     '''View all donations logged'''
-    print("\nDonation Log:")
+    print("[Backend] Getting donations.")
     output = []
     if not donations_log:
-        print("No donations logged.")
+        output.append("No donations logged.")
     else:
         for log in donations_log:
             output.append(f"- Date: {log['date']}, Donor: {log['donor']}, Type: {log['type']}, Details: {log['item_details']}")
@@ -120,10 +120,10 @@ def view_donations(donations_log):
 
 def view_distributions(distributions_log):
     '''View all food distribution logged'''
-    print("\nFood Distribution Log:")
+    print("[Backend] Getting distributions")
     output = []
     if not distributions_log:
-        print("No distributions logged.")
+        output.append("No distributions logged.")
     else:
         for log in distributions_log:
             output.append(f"- Date: {log['date']}, Household: {log['household']}, Items: {log['item_details']}")
@@ -155,6 +155,7 @@ def main():
 
         if choice == '1':
             output = view_inventory(inventory)
+            print("\nInventory:")
             for i in output:
                 print(i)
         elif choice == '2':
@@ -189,10 +190,12 @@ def main():
             record_distribution(inventory, distributions_log, household, item, qty)
         elif choice == '5':
             output = view_donations(donations_log)
+            print("\nDonations:")
             for i in output:
                 print(i)
         elif choice == '6':
             output = view_distributions(distributions_log)
+            print("\nDistributions")
             for i in output:
                 print(i)
         elif choice == '0':
