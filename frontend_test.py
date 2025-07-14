@@ -9,39 +9,32 @@ inventory=backend.load_data(backend.INVENTORY_FILE)
 donations_log = backend.load_data(backend.DONATIONS_FILE)
 distributions_log = backend.load_data(backend.DISTRIBUTIONS_FILE)
 
-# MOCK FUNCTIONS
+# Button Functions
 def add_food():
     item = food_entry.get()
     quantity = food_quantity_entry.get()
     donor = food_donor_entry.get()
-    backend.add_food_donation(inventory=inventory, donations_log=donations_log, donor_name="TEST", item_name=item, quantity=quantity, expiration_date=("2000-01-01"))
-    # if item and quantity and donor:
-    #   # Adds to food_donations list
-    #     food_donations.append((donor, item, quantity))
-    #   # Deletes previous entries from entry box
-    #     food_entry.delete(0, tk.END)
-    #     food_quantity_entry.delete(0, tk.END)
-    #     food_donor_entry.delete(0, tk.END)
-
+    if item and quantity and donor:
+        backend.add_food_donation(inventory=inventory, donations_log=donations_log, donor_name="TEST", item_name=item, quantity=quantity, expiration_date=("2000-01-01"))
+    
 def add_money():
-    amount = float(money_entry.get())
+    try:
+        amount = float(money_entry.get())
+    except:
+        print("Could not change amount to a float.")
     donor = money_donor_entry.get()
-    backend.add_money_donation(donations_log=donations_log, donor_name=donor, amount=amount)
-    # if amount and donor:
-    #     money_donations.append((amount, donor))
-    #     money_entry.delete(0, tk.END)
-    #     money_donor_entry.delete(0,tk.END)
+    if amount and donor:
+        backend.add_money_donation(donations_log=donations_log, donor_name=donor, amount=amount)
 
 def record_distribution():
     household = household_entry.get()
     item = distribute_item_entry.get()
-    quantity = int(distribute_quantity_entry.get())
-    backend.record_distribution(inventory=inventory, distributions_log=distributions_log, household_name=household, item_name=item, quantity_taken=quantity)
-    # if household and item and quantity:
-    #     food_distribution.append((household, item, quantity))
-    #     household_entry.delete(0, tk.END)
-    #     distribute_item_entry.delete(0, tk.END)
-    #     distribute_quantity_entry.delete(0, tk.END)
+    try:
+        quantity = int(distribute_quantity_entry.get())
+    except:
+        print("Could not change to an int.")
+    if household and item and quantity:
+        backend.record_distribution(inventory=inventory, distributions_log=distributions_log, household_name=household, item_name=item, quantity_taken=quantity)
 
 def view_distributions_inventory():
   # Creates a new popup window
@@ -155,9 +148,3 @@ tk.Button(root, text="View Inventory & Distributions", command=view_distribution
 #                                                              columnspan=2, pady=10)
 
 root.mainloop()
-
-
-
-
-
-
