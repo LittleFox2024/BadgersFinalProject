@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Canned Corn",
+        "quantity": 38,
+        "expiration_date": "2026-10-05"
+    },
+    {
+        "name": "Peanut Butter",
+        "quantity": 25,
+        "expiration_date": "2025-12-20"
+    },
+    {
+        "name": "Pasta",
+        "quantity": 50,
+        "expiration_date": "2026-08-01"
+    },
+    {
+        "name": "Canned Beans",
+        "quantity": 48,
+        "expiration_date": "2026-11-15"
+    },
+    {
+        "name": "Rice",
+        "quantity": 30,
+        "expiration_date": "2027-01-10"
+    },
+    {
+        "name": "Cereal",
+        "quantity": 20,
+        "expiration_date": "2026-05-20"
+    },
+    {
+        "name": "Chicken Soup",
+        "quantity": 36,
+        "expiration_date": "2026-09-01"
+    },
+    {
+        "name": "Apples",
+        "quantity": 15,
+        "expiration_date": "2025-08-10"
+    }
+]

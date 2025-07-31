@@ -1,0 +1,25 @@
+[
+    {
+        "donor": "Jane Smith",
+        "type": "Money",
+        "details": 100.0,
+        "date": "2025-07-27"
+    },
+    {
+        "donor": "Local Grocer",
+        "type": "Food",
+        "details": [
+            {
+                "name": "Canned Corn",
+                "quantity": 24,
+                "expiration_date": "2026-10-05"
+            },
+            {
+                "name": "Pasta",
+                "quantity": 20,
+                "expiration_date": "2026-08-01"
+            }
+        ],
+        "date": "2025-07-28"
+    }
+]

@@ -1,0 +1,70 @@
+[
+    {
+        "household_name": "Jane's Family",
+        "household_size": 4,
+        "items": [
+            {
+                "name": "Pasta",
+                "quantity": 4
+            },
+            {
+                "name": "Canned Beans",
+                "quantity": 4
+            }
+        ],
+        "date": "2025-07-28"
+    },
+    {
+        "household_name": "John's Family",
+        "household_size": 2,
+        "items": [
+            {
+                "name": "Rice",
+                "quantity": 2
+            },
+            {
+                "name": "Chicken Soup",
+                "quantity": 2
+            }
+        ],
+        "date": "2025-07-29"
+    },
+    {
+        "household_name": "Smith, J.",
+        "household_size": 5,
+        "items": [
+            {
+                "name": "Pasta",
+                "quantity": 5
+            },
+            {
+                "name": "Canned Corn",
+                "quantity": 3
+            },
+            {
+                "name": "Peanut Butter",
+                "quantity": 1
+            }
+        ],
+        "date": "2025-07-30"
+    },
+    {
+        "household_name": "Jack Riper",
+        "household_size": 3,
+        "items": [
+            {
+                "name": "Cereal",
+                "quantity": 2
+            },
+            {
+                "name": "Apples",
+                "quantity": 4
+            },
+            {
+                "name": "Pasta",
+                "quantity": 2
+            }
+        ],
+        "date": "2025-07-30"
+    }
+]
